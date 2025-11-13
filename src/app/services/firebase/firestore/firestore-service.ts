@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { doc, docData, DocumentData, Firestore, setDoc } from '@angular/fire/firestore';
+import { collectionData, CollectionReference, doc, docData, DocumentData, Firestore, setDoc } from '@angular/fire/firestore';
 import { Observable, Subject, takeUntil } from 'rxjs';
 
 @Injectable({
@@ -29,5 +29,9 @@ export class FirestoreService {
 			return [...f].reduce((acc, crr) => {
 				return acc.pipe(crr)
 			}, docData(ref).pipe(takeUntil(this.killSwitch)))
+	}
+
+	kcollection(ref: CollectionReference<DocumentData, DocumentData>) {
+		return collectionData(ref).pipe(takeUntil(this.killSwitch));
 	}
 }

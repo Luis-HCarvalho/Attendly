@@ -45,8 +45,8 @@ export const routes: Routes = [
 				loadComponent: () => import("./attendence/attendence.component").then(c => c.AttendenceComponent)
 			},
 			{
-				path: "bjjtimer",
-				loadComponent: () => import("./bjj-timer/bjj-timer.component").then(c => c.BjjTimerComponent)
+				path: "timer",
+				loadComponent: () => import("./timer/timer.component").then(c => c.TimerComponent)
 			},
 			{
 				path: '',

@@ -49,6 +49,10 @@ export const routes: Routes = [
 				loadComponent: () => import("./timer/timer.component").then(c => c.TimerComponent)
 			},
 			{
+				path: "users",
+				loadComponent: () => import("./users/users.component").then(c => c.UsersComponent)
+			},
+			{
 				path: '',
 				redirectTo: 'attendence',
 				pathMatch: 'full',

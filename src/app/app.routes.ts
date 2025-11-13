@@ -1,8 +1,76 @@
-import { Routes } from '@angular/router';
+import { inject } from '@angular/core';
+import { getAuth, onAuthStateChanged } from '@angular/fire/auth';
+import { Router, Routes } from '@angular/router';
+import { TabsPage } from './tabs/tabs.page';
+
+function logged(): Promise<boolean> {
+	return new Promise<boolean>((resolve) => {
+        const auth = getAuth();
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) resolve(true);
+            else resolve(false);
+            
+            unsubscribe();
+        });
+    });
+}
 
 export const routes: Routes = [
-  {
-    path: '',
-    loadChildren: () => import('./tabs/tabs.routes').then((m) => m.routes),
-  },
+	{
+		path: "login",
+		loadComponent: () => import("./login/login.component").then(c => c.LoginComponent),
+		// canActivate: [() => {
+		// 	/** If alreqdy logged redirect to BranchesComponent
+		// 	 	else open login component*/
+		// 	const router = inject(Router);
+		// 	return new Promise<boolean>((resolve) => {
+		// 		resolve(true)
+		// 		logged().then((result: boolean) => {
+		// 			result && router && router.navigate(["tabs"]);
+		// 			resolve(true)
+		// 		})
+		// 	});
+		// }],
+	},
+	{
+		path: 'tabs',
+		component: TabsPage,
+		children: [
+			{
+				path: "dashboard",
+				loadComponent: () => import("./dashboard/dashboard.component").then(c => c.DashboardComponent)
+			},
+			{
+				path: "attendence",
+				loadComponent: () => import("./attendence/attendence.component").then(c => c.AttendenceComponent)
+			},
+			{
+				path: "bjjtimer",
+				loadComponent: () => import("./bjj-timer/bjj-timer.component").then(c => c.BjjTimerComponent)
+			},
+			{
+				path: '',
+				redirectTo: 'dashboard',
+				pathMatch: 'full',
+			}
+		],
+		// canActivate: [() => {
+		// 	const router = inject(Router);
+		// 	return new Promise<boolean>((resolve) => {
+		// 		logged().then((result: boolean) => {
+		// 			if (result) {
+		// 				resolve(true);
+		// 			} else {
+		// 				router && router.navigate(["login"]);
+		// 				resolve(false);
+		// 			}
+		// 		})
+		// 	});
+		// }],
+	},
+	{
+		path: '',
+		redirectTo: 'login',
+		pathMatch: 'full',
+	},
 ];

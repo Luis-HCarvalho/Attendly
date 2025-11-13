@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { getAuth, onAuthStateChanged } from '@angular/fire/auth';
 import { Router, Routes } from '@angular/router';
-import { TabsPage } from './tabs/tabs.page';
+import { MenuComponent } from './menu/menu.component';
 
 function logged(): Promise<boolean> {
 	return new Promise<boolean>((resolve) => {
@@ -34,7 +34,7 @@ export const routes: Routes = [
 	},
 	{
 		path: 'tabs',
-		component: TabsPage,
+		component: MenuComponent,
 		children: [
 			{
 				path: "dashboard",
@@ -50,7 +50,7 @@ export const routes: Routes = [
 			},
 			{
 				path: '',
-				redirectTo: 'dashboard',
+				redirectTo: 'attendence',
 				pathMatch: 'full',
 			}
 		],

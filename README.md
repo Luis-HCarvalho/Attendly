@@ -10,12 +10,29 @@ snippet below.
 ```js
 export const environment = {
 	firebaseConfig: {
-		apiKey: <apiKey>,
-		authDomain: <authDomain>,
-		projectId: <projectId>,
-		storageBucket: <storageBucket>,
-		messagingSenderId: <messagingSenderId>,
-		appId: <appId>
+		apiKey: "<apiKey>",
+		authDomain: "<authDomain>",
+		projectId: "<projectId>",
+		storageBucket: "<storageBucket>",
+		messagingSenderId: "<messagingSenderId>",
+		appId: "<appId>"
 	}
 };
+```
+
+## Hosting
+Login + Select a firebase project
+```bash
+npx firebase login
+```
+
+Setup
+```bash
+npx firebase init
+# select Hosting and set the "public" diretory to "www"
+```
+
+Deploy
+```bash
+npx ng build && npx firebase deploy --only hosting
 ```

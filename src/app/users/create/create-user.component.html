@@ -1,0 +1,159 @@
+<ion-content>
+	<div class="form-container">
+		<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+
+			<!-- Profile Photo Section -->
+			<div class="profile-photo-section">
+				<div class="photo-container">
+					<div class="photo-preview" [class.has-image]="profileImg">
+						@if (profileImg) {
+							<img *ngIf="profileImg" [src]="profileImg" alt="Profile" />
+						} @else {
+							<img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+						}
+					</div>
+					<input type="file" #fileInput accept="image/*" (change)="onImageSelect($event)"
+						style="display: none" />
+					<ion-button fill="outline" size="small" (click)="fileInput.click()" class="upload-btn">
+						<ion-icon slot="start" name="camera-outline"></ion-icon>
+						Upload Photo
+					</ion-button>
+					@if (profileImg) {
+						<ion-button fill="clear" size="small" color="danger" (click)="removeImage()">
+							Remove
+						</ion-button>
+					}
+				</div>
+			</div>
+
+			<!-- Personal Information -->
+			<div class="section-header">
+				<ion-icon name="person-outline"></ion-icon>
+				<h2>Personal Information</h2>
+			</div>
+
+			<ion-item class="form-item" [class.error]="fullName?.invalid && fullName?.touched">
+				<ion-label position="stacked">Full Name *</ion-label>
+				<ion-input formControlName="fullName" placeholder="Enter full name" type="text"></ion-input>
+			</ion-item>
+			<div class="error-message" *ngIf="fullName?.invalid && fullName?.touched">
+				<span *ngIf="fullName?.errors?.['required']">Full name is required</span>
+				<span *ngIf="fullName?.errors?.['minlength']">Name must be at least 3 characters</span>
+			</div>
+
+			<ion-item class="form-item" [class.error]="email?.invalid && email?.touched">
+				<ion-label position="stacked">Email</ion-label>
+				<ion-input formControlName="email" placeholder="name@email.com" type="email"></ion-input>
+			</ion-item>
+			<div class="error-message" *ngIf="email?.invalid && email?.touched">
+				<!-- <span *ngIf="email?.errors?.['required']">Email is required</span> -->
+				<span *ngIf="email?.errors?.['email']">Please enter a valid email</span>
+			</div>
+
+			<ion-item class="form-item" [class.error]="phone?.invalid && phone?.touched">
+				<ion-label position="stacked">Phone Number</ion-label>
+				<ion-input formControlName="phone" placeholder="1234567890" type="tel"></ion-input>
+			</ion-item>
+			<div class="error-message" *ngIf="phone?.invalid && phone?.touched">
+				<span>Please enter a valid phone number (10-15 digits)</span>
+			</div>
+
+			<ion-item class="form-item" [class.error]="dateOfBirth?.invalid && dateOfBirth?.touched">
+				<ion-label position="stacked">Date of Birth</ion-label>
+				<ion-datetime-button datetime="dob"></ion-datetime-button>
+				<ion-modal [keepContentsMounted]="true">
+					<ng-template>
+						<ion-datetime id="dob" formControlName="dateOfBirth" presentation="date"></ion-datetime>
+					</ng-template>
+				</ion-modal>
+			</ion-item>
+
+			<!-- Jiu-Jitsu Information -->
+			<div class="section-header">
+				<ion-icon name="ribbon-outline"></ion-icon>
+				<h2>Jiu-Jitsu Information</h2>
+			</div>
+
+			<ion-item class="form-item" [class.error]="category?.invalid && category?.touched">
+				<ion-label position="stacked">Category *</ion-label>
+				<ion-select formControlName="category" placeholder="Select category" interface="action-sheet">
+					<ion-select-option *ngFor="let cat of categories" [value]="cat.id">
+						{{ cat.name }} ({{ cat.ageRange }})
+					</ion-select-option>
+				</ion-select>
+			</ion-item>
+
+			<ion-item class="form-item" [class.error]="beltColor?.invalid && beltColor?.touched">
+				<ion-label position="stacked">Belt Color *</ion-label>
+				<ion-select formControlName="beltColor" placeholder="Select belt color" interface="popover">
+					<ion-select-option *ngFor="let belt of beltColors" [value]="belt.name">
+						{{ belt.name }}
+					</ion-select-option>
+				</ion-select>
+			</ion-item>
+
+			<!-- Belt Preview -->
+			<div class="belt-preview" *ngIf="beltColor?.value">
+				<div class="belt-display">
+					<div class="belt" [ngStyle]="getBeltStyle(beltColor.value)">
+						<div class="stripes-container">
+							<div class="stripe" *ngFor="let stripe of [].constructor(stripes?.value)"></div>
+						</div>
+					</div>
+					<p>{{ beltColor.value }} Belt - {{ stripes?.value }} Stripe(s)</p>
+				</div>
+			</div>
+
+			<ion-item class="form-item" *ngIf="stripeOptions.length > 0">
+				<ion-label position="stacked">Number of Stripes *</ion-label>
+				<ion-select formControlName="stripes" placeholder="Select stripes" interface="popover">
+					<ion-select-option *ngFor="let num of stripeOptions" [value]="num">
+						{{ num }} Stripe{{ num !== 1 ? 's' : '' }}
+					</ion-select-option>
+				</ion-select>
+			</ion-item>
+
+			<!-- Emergency Contact -->
+			<div class="section-header">
+				<ion-icon name="alert-circle-outline"></ion-icon>
+				<h2>Emergency Contact</h2>
+			</div>
+
+			<ion-item class="form-item" [class.error]="emergencyContact?.invalid && emergencyContact?.touched">
+				<ion-label position="stacked">Emergency Contact Name</ion-label>
+				<ion-input formControlName="emergencyContact" placeholder="Contact name" type="text"></ion-input>
+			</ion-item>
+
+			<ion-item class="form-item" [class.error]="emergencyPhone?.invalid && emergencyPhone?.touched">
+				<ion-label position="stacked">Emergency Phone</ion-label>
+				<ion-input formControlName="emergencyPhone" placeholder="1234567890" type="tel"></ion-input>
+			</ion-item>
+
+			<!-- Additional Notes -->
+			<div class="section-header">
+				<ion-icon name="document-text-outline"></ion-icon>
+				<h2>Additional Notes</h2>
+			</div>
+
+			<ion-item class="form-item textarea-item">
+				<ion-label position="stacked">Notes (Optional)</ion-label>
+				<ion-textarea formControlName="notes" placeholder="Medical conditions, previous experience, etc."
+					rows="4" auto-grow="true"></ion-textarea>
+			</ion-item>
+
+			<!-- Action Buttons -->
+			<div class="action-buttons">
+				<ion-button expand="block" type="submit" [disabled]="userForm.invalid" class="submit-btn">
+					<ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
+					Register Student
+				</ion-button>
+
+				<ion-button expand="block" fill="outline" type="button" (click)="resetForm()" class="reset-btn">
+					<ion-icon slot="start" name="refresh-outline"></ion-icon>
+					Clear Form
+				</ion-button>
+			</div>
+
+		</form>
+	</div>
+</ion-content>

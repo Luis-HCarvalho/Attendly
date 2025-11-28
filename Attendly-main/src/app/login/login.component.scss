@@ -1,0 +1,282 @@
+.login-content {
+	--background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+	.login-container {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 100vh;
+		padding: 20px;
+	}
+
+	.login-card {
+		background: white;
+		border-radius: 20px;
+		padding: 40px 30px;
+		width: 100%;
+		max-width: 440px;
+		box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+		animation: slideUp 0.5s ease-out;
+
+		@media (max-width: 576px) {
+			padding: 30px 20px;
+			border-radius: 15px;
+		}
+	}
+
+	@keyframes slideUp {
+		from {
+			opacity: 0;
+			transform: translateY(30px);
+		}
+
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	.brand-section {
+		text-align: center;
+		margin-bottom: 30px;
+
+		.brand-icon {
+			font-size: 64px;
+			color: #667eea;
+			margin-bottom: 15px;
+		}
+
+		h1 {
+			font-size: 28px;
+			font-weight: 700;
+			color: #2d3748;
+			margin: 0 0 8px 0;
+		}
+
+		.subtitle {
+			font-size: 14px;
+			color: #718096;
+			margin: 0;
+		}
+	}
+
+	.login-form {
+		.input-item {
+			color: black;
+			--background: #f7fafc;
+			--border-radius: 12px;
+			--padding-start: 16px;
+			--padding-end: 16px;
+			--inner-padding-end: 8px;
+			margin-bottom: 8px;
+			border: 1px solid #e2e8f0;
+			border-radius: 12px;
+			transition: all 0.3s ease;
+
+			&:focus-within {
+				--background: white;
+				border-color: #667eea;
+				box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+			}
+
+			ion-icon {
+				color: #a0aec0;
+				font-size: 20px;
+				margin-right: 8px;
+			}
+
+			ion-input {
+				--padding-start: 0;
+				--padding-end: 0;
+				font-size: 15px;
+			}
+		}
+
+		.toggle-password {
+			--padding-start: 0;
+			--padding-end: 0;
+			margin: 0;
+
+			ion-icon {
+				font-size: 22px;
+				color: #a0aec0;
+			}
+		}
+
+		.error-message {
+			color: #e53e3e;
+			font-size: 12px;
+			margin: 4px 0 12px 16px;
+			animation: shake 0.3s ease;
+		}
+
+		@keyframes shake {
+
+			0%,
+			100% {
+				transform: translateX(0);
+			}
+
+			25% {
+				transform: translateX(-5px);
+			}
+
+			75% {
+				transform: translateX(5px);
+			}
+		}
+
+		.form-options {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin: 16px 0 24px;
+
+			.remember-checkbox {
+				--size: 20px;
+				font-size: 14px;
+				color: #4a5568;
+			}
+
+			.forgot-password {
+				--color: #667eea;
+				font-size: 13px;
+				text-transform: none;
+				margin: 0;
+			}
+		}
+
+		.login-button {
+			--background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			--border-radius: 12px;
+			height: 48px;
+			font-size: 16px;
+			font-weight: 600;
+			margin-bottom: 20px;
+			text-transform: none;
+			letter-spacing: 0.3px;
+
+			&:hover:not([disabled]) {
+				transform: translateY(-2px);
+				box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+			}
+
+			&[disabled] {
+				opacity: 0.5;
+			}
+		}
+
+		.divider {
+			position: relative;
+			text-align: center;
+			margin: 24px 0;
+
+			&::before {
+				content: '';
+				position: absolute;
+				left: 0;
+				top: 50%;
+				width: 100%;
+				height: 1px;
+				background: #e2e8f0;
+			}
+
+			span {
+				position: relative;
+				background: white;
+				padding: 0 16px;
+				color: #a0aec0;
+				font-size: 13px;
+				font-weight: 500;
+			}
+		}
+
+		.social-login {
+			margin-bottom: 20px;
+
+			.social-button {
+				--border-radius: 12px;
+				--border-width: 1px;
+				--border-color: #e2e8f0;
+				height: 48px;
+				font-size: 15px;
+				font-weight: 500;
+				margin-bottom: 12px;
+				text-transform: none;
+
+				&.google {
+					--color: #4285f4;
+
+					&:hover {
+						--background: rgba(66, 133, 244, 0.05);
+					}
+				}
+
+				&.apple {
+					--color: #000000;
+
+					&:hover {
+						--background: rgba(0, 0, 0, 0.05);
+					}
+				}
+
+				ion-icon {
+					font-size: 20px;
+					margin-right: 8px;
+				}
+			}
+		}
+
+		.signup-link {
+			text-align: center;
+			font-size: 14px;
+			color: #718096;
+			margin-top: 16px;
+
+			ion-button {
+				--color: #667eea;
+				font-weight: 600;
+				text-transform: none;
+				margin: 0;
+				display: inline;
+			}
+		}
+	}
+}
+
+// Dark mode support
+@media (prefers-color-scheme: dark) {
+	.login-content {
+		.login-card {
+			background: #1a202c;
+		}
+
+		.brand-section {
+			h1 {
+				color: #f7fafc;
+			}
+
+			.subtitle {
+				color: #a0aec0;
+			}
+		}
+
+		.input-item {
+			--background: #2d3748;
+			border-color: #4a5568;
+
+			&:focus-within {
+				--background: #2d3748;
+				border-color: #667eea;
+			}
+		}
+
+		.divider span {
+			background: #1a202c;
+		}
+
+		.signup-link {
+			color: #a0aec0;
+		}
+	}
+}

@@ -1,0 +1,42 @@
+<ion-header class="">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title>
+      <p>Aulas</p>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <cdk-virtual-scroll-viewport itemSize="80">
+    <!-- BOTÃO CREATE NEW (igual ao dos alunos) -->
+    <ion-card (click)="openModal()" matRipple>
+      <ion-card-header style="display: flex;">
+        <ion-card-title>Create new</ion-card-title>
+      </ion-card-header>
+    </ion-card>
+
+    <!-- LISTA DE AULAS -->
+    <ion-card
+      *cdkVirtualFor="let lesson of lessons"
+      matRipple
+      (click)="openModal(lesson)">
+
+      <ion-card-header>
+        <ion-card-title>{{ lesson.title }}</ion-card-title>
+        <ion-card-subtitle>
+          Data: {{ formatDate(lesson.date) }} - Duração: {{ lesson.duration }}min
+        </ion-card-subtitle>
+        <ion-card-subtitle>
+          Categoria: {{ lesson.category }} - Faixa: {{ lesson.beltLevel }}
+        </ion-card-subtitle>
+        <ion-card-subtitle>
+          Técnicas: {{ lesson.techniques.length }}
+        </ion-card-subtitle>
+      </ion-card-header>
+    </ion-card>
+  </cdk-virtual-scroll-viewport>
+</ion-content>

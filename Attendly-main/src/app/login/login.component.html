@@ -1,0 +1,73 @@
+<ion-content class="login-content">
+	<div class="login-container">
+		<div class="login-card">
+			<!-- Logo/Brand Section -->
+			<div class="brand-section">
+				<ion-icon name="lock-closed" class="brand-icon"></ion-icon>
+				<h1>Welcome Back</h1>
+				<p class="subtitle">Sign in to continue</p>
+			</div>
+
+			<!-- Login Form -->
+			<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+				<!-- Email Field -->
+				<ion-item lines="none" class="input-item">
+					<ion-icon name="mail-outline" slot="start"></ion-icon>
+					<ion-input type="email" formControlName="email" placeholder="Email"
+						autocomplete="email"></ion-input>
+				</ion-item>
+				<div class="error-message" *ngIf="email?.invalid && email?.touched">
+					<span *ngIf="email?.errors?.['required']">Email is required</span>
+					<span *ngIf="email?.errors?.['email']">Please enter a valid email</span>
+				</div>
+
+				<!-- Password Field -->
+				<ion-item lines="none" class="input-item">
+					<ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+					<ion-input [type]="showPasswd ? 'text' : 'password'" formControlName="password"
+						placeholder="Password" autocomplete="current-password"></ion-input>
+					<ion-button fill="clear" slot="end" (click)="togglePasswordVisibility()" class="toggle-password">
+						<ion-icon [name]="showPasswd ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+					</ion-button>
+				</ion-item>
+				<div class="error-message" *ngIf="password?.invalid && password?.touched">
+					<span *ngIf="password?.errors?.['required']">Password is required</span>
+					<span *ngIf="password?.errors?.['minlength']">Password must be at least 6 characters</span>
+				</div>
+
+				<!-- Remember Me & Forgot Password -->
+				<div class="form-options">
+					<ion-button fill="clear" size="small" class="forgot-password">
+						Forgot Password?
+					</ion-button>
+				</div>
+
+				<!-- Submit Button -->
+				<ion-button expand="block" type="submit" class="login-button" [disabled]="loginForm.invalid">
+					Sign In
+				</ion-button>
+
+				<!-- Divider -->
+				<div class="divider">
+					<span>OR</span>
+				</div>
+
+				<!-- Social Login Buttons -->
+				<div class="social-login">
+					<ion-button expand="block" fill="outline" class="social-button google">
+						<ion-icon name="logo-google" slot="start"></ion-icon>
+						Continue with Google
+					</ion-button>
+				</div>
+
+				<!-- Sign Up Link -->
+				<div class="signup-link">
+					<span>Don't have an account?</span>
+					<ion-button fill="clear" size="small">
+						Sign Up
+					</ion-button>
+				</div>
+			</form>
+		</div>
+	</div>
+</ion-content>

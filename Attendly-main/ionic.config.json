@@ -1,7 +1,0 @@
-{
-  "name": "Attendly",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular-standalone"
-}
